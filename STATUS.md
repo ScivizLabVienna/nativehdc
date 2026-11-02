@@ -1,9 +1,10 @@
 # STATUS — nativehdc (single source of truth per session; update before ending a session)
 
-Current phase: **G2 bake-off RUNNING** (auto-starts after tokenization; both arms on 3090 co-resident with Strata)
+Current phase: **G2 bake-off RUNNING (restarted clean 2026-11-02 19:10 CET)** — sequential ghrr→vanilla on 3090 co-resident with Strata, persistent proc `proc_1cab6766d3b5` (survives session end; kill = stop that process). Exact command:
+`.venv/Scripts/python.exe src/train.py --attn ghrr >> runs/bakeoff.log 2>&1 && .venv/Scripts/python.exe src/train.py --attn vanilla >> runs/bakeoff.log 2>&1`
 
 ## Next actionable item
-- [ ] **G2 verdict** — bake-off RUNNING since 2026-11-02 ~evening (watcher waits data_prep DONE, then ghrr arm -> vanilla arm; persistent proc, log `runs/bakeoff.log`, per-arm JSONL `runs/{arm}.jsonl`). When both `DONE` lines appear: fill G2 gate below. Decision rule: GHRR within baseline +/-10% = keep + go Phase 4; worse = one LR re-run (3e-4/1e-3), then pivot to m>1 GHRR matrices (D=heads, m=n_ctx short ctx).
+- [ ] **G2 verdict** — first partial attempt died at step 204,600/292,968 (no DONE line; interim best ghrr PPL **7.179 @ ~204k**, monotone-improving from 11.6 @10.5k — informative only, not gate-eligible). Restart is full fresh replay (train.py has no optimizer-state resume; seed 1337 deterministic so steps ≤204.6k replay the same trajectory and duplicate step keys in `runs/ghrr.jsonl` are overwritten by the report script). Vanilla arm GPU smoke PASS 40 steps (loss 10.8→9.7, exit 0) before restart; smoke artifacts removed. Observed 9.5–16.3k tok/s co-resident (Strata busy vs idle); ETA ghrr DONE ~04:00, vanilla DONE ~12:30 CET 2026-11-03. Runner notifies on `DONE arm=` / OOM / exit. When both `DONE` lines appear: `.venv/Scripts/python.exe scripts/make_bakeoff_report.py`. Decision rule: GHRR within baseline +/-10% = keep + go Phase 4; worse = one LR re-run (3e-4/1e-3), then pivot to m>1 GHRR matrices (D=heads, m=n_ctx short ctx).
 - [ ] Optional if GHRR loses: diagonality/m>1 ablation (research notes #6), tau tuning (fixed 4.0 may be too soft at dh=512).
 
 ## Gate log (fill as gates run: command, date, measured numbers, verdict)
