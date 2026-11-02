@@ -31,3 +31,5 @@ if steps:
         print(f"G2 VERDICT: {verdict}")
     else:
         print("(vanilla arm still running — rerun after both DONE lines in runs/bakeoff.log)")
+elif g:
+    print(f"ghrr-only so far: latest eval step={max(g)} ppl={g[max(g)]:.2f} (vanilla pending)")
