@@ -12,10 +12,10 @@ class Attention(nn.Module):
     arm's q/k angles (research note 4: PEs fixed + vary across QKV/heads; scalar-per-head cheap
     variant — full-D lambda table is a later ablation)."""
 
-    def __init__(self, d_model, n_heads, hv_dim, attn_type, vocab, seed=1337):
+    def __init__(self, d_model, n_heads, hv_dim, attn_type, vocab, seed=1337, tau=4.0):
         super().__init__()
         assert attn_type in ("ghrr", "vanilla") and hv_dim % n_heads == 0
-        self.type, self.h, self.dh = attn_type, n_heads, hv_dim // n_heads
+        self.type, self.h, self.dh, self.tau = attn_type, n_heads, hv_dim // n_heads, tau
         self.wq = nn.Linear(d_model, hv_dim)
         self.wk = nn.Linear(d_model, hv_dim)
         self.wv = nn.Linear(d_model, hv_dim)
@@ -34,7 +34,7 @@ class Attention(nn.Module):
             pb = self.phase_bias[ids]  # [B,T,3,H]; q/k only, v stays real in BOTH arms (single-factor swap)
             zq = torch.exp(1j * (q + pb[:, :, 0].transpose(1, 2).unsqueeze(-1)))
             zk = torch.exp(1j * (k + pb[:, :, 1].transpose(1, 2).unsqueeze(-1)))
-            scores = 4.0 * (zq @ zk.conj().transpose(-1, -2)).real / self.dh
+            scores = self.tau * (zq @ zk.conj().transpose(-1, -2)).real / self.dh
         else:
             scores = q @ k.transpose(-1, -2) / math.sqrt(self.dh)
         mask = torch.full((T, T), float("-inf"), device=x.device, dtype=scores.dtype).triu(1)
@@ -46,7 +46,7 @@ class Block(nn.Module):
     def __init__(self, cfg):
         super().__init__()
         self.ln1 = nn.LayerNorm(cfg.d_model)
-        self.attn = Attention(cfg.d_model, cfg.n_heads, cfg.hv_dim, cfg.attn_type, cfg.vocab, cfg.seed + cfg.i)
+        self.attn = Attention(cfg.d_model, cfg.n_heads, cfg.hv_dim, cfg.attn_type, cfg.vocab, cfg.seed + cfg.i, cfg.tau)
         self.ln2 = nn.LayerNorm(cfg.d_model)
         self.mlp = nn.Sequential(nn.Linear(cfg.d_model, 4 * cfg.d_model), nn.GELU(),
                                  nn.Linear(4 * cfg.d_model, cfg.d_model))
@@ -58,13 +58,13 @@ class Block(nn.Module):
 
 class TinyLM(nn.Module):
     def __init__(self, d_model=384, n_layer=6, n_heads=8, hv_dim=4096, vocab=50257, ctx=64,
-                 attn_type="ghrr", seed=1337):
+                 attn_type="ghrr", seed=1337, tau=4.0):
         super().__init__()
         self.ctx = ctx
         cfgs = []
         for i in range(n_layer):
             c = nn.Module(); c.d_model, c.n_heads, c.hv_dim = d_model, n_heads, hv_dim
-            c.attn_type, c.vocab, c.seed, c.i = attn_type, vocab, seed, i
+            c.attn_type, c.vocab, c.seed, c.i, c.tau = attn_type, vocab, seed, i, tau
             cfgs.append(c)
         self.tok = nn.Embedding(vocab, d_model)
         self.pos = nn.Embedding(ctx, d_model)
