@@ -42,6 +42,7 @@ if __name__ == "__main__":
     ap.add_argument("--ctx", type=int, default=CTX)
     ap.add_argument("--tau", type=float, default=4.0)  # G5 ablation knob; baked value in champion ckpt = 4.0
     ap.add_argument("--nobest", action="store_true")  # smoke/ablation: never clobber runs/<arm>_best.pt
+    ap.add_argument("--suffix", default="", help="tag artifacts -> runs/<arm><sfx>.jsonl / <arm><sfx>_best.pt; protects champion paths")
     args = ap.parse_args()
     CTX = args.ctx  # module-scope rebinding: batches()/evaluate() read global CTX
 
@@ -54,7 +55,7 @@ if __name__ == "__main__":
               ctx=args.ctx, tau=args.tau).to(DEV)
     steps = args.steps or int(300e6 // (B * CTX))
     runs = os.path.join(HERE, "..", "runs"); os.makedirs(runs, exist_ok=True)
-    logf = open(os.path.join(runs, f"{args.attn}.jsonl"), "a")
+    logf = open(os.path.join(runs, f"{args.attn}{args.suffix}.jsonl"), "a")
     print(f"arm={args.attn} params={sum(p.numel() for p in m.parameters())/1e6:.1f}M steps={steps}", flush=True)
 
     groups = [dict(params=[p for p in m.parameters() if p.ndim >= 2], weight_decay=0.1),
@@ -79,6 +80,6 @@ if __name__ == "__main__":
                 if rec["ppl"] < best:
                     best = rec["ppl"]
                     if not args.nobest:
-                        torch.save(m.state_dict(), os.path.join(runs, f"{args.attn}_best.pt"))
+                        torch.save(m.state_dict(), os.path.join(runs, f"{args.attn}{args.suffix}_best.pt"))
             print(json.dumps(rec), flush=True); logf.write(json.dumps(rec) + "\n"); logf.flush()
     print(f"DONE arm={args.attn} best_ppl={best:.3f} tokens={done/1e6:.1f}M t={(time.time()-t0)/3600:.2f}h")
