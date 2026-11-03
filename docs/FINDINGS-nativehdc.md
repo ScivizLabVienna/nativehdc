@@ -34,8 +34,10 @@ best val PPL grid (ghrr@3e-4, --nobest):
 - Production harness ItemStore stores per-item vectors → not bundling-limited; m>1 binding matrices would raise the bundled-vector ceiling (memory-capacity lever = G2 pivot lever).
 - End-to-end: champion TinyLM behind harness gate answers grounded question, cites doc-7, coherent continuation. Trace: runs/phase4_trace.jsonl.
 
-## Pending tonight
-τ8 full-budget retrain (`--suffix _tau8`) vs 5.966 — promote iff strictly better + g3_test 10/10 on new ckpt. Prize est. 3–5 %.
+## Champion promotion (2026-11-03, verified)
+- Full-budget τ8 retrain: best val PPL **5.853** (t=4.37 h) vs τ4 champion 5.966 → **−1.9 %, strictly better → PROMOTED**. Old champion preserved (`runs/ghrr_tau4_champ_best.pt`). Verified under `GHRR_TAU=8`: g3_test 10/10, phase4_demo exit 0.
+- Realized gain (−1.9 %) again undershot the 20 k-probe extrapolation (−3–5 %): third confirmation that short-probe deltas compress at full budget — discount probe-prize estimates roughly half.
+- **Pitfall: checkpoints carry no τ scalar** (construct-time arg only). g3_test/phase4_demo now honor `GHRR_TAU` env; always match it to the training value, else scores are mis-scaled while load_state_dict succeeds silently.
 
 ## Standing ops lessons (enforced in tooling)
 - `--nobest` for any short run; `--suffix` for full runs that must not touch champion paths (both smoke-proven via mtime isolation).

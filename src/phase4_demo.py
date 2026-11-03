@@ -74,7 +74,7 @@ if __name__ == "__main__":
                 ("ana", "drew", "a big purple house", "doc-5"), ("tom", "walked", "to the small lake", "doc-1")])
             con.commit(); con.close()
         tk = AutoTokenizer.from_pretrained("gpt2")
-        m = TinyLM(attn_type="ghrr")
+        m = TinyLM(attn_type="ghrr", tau=float(os.environ.get("GHRR_TAU", "4")))  # ckpt carries no tau; env must match training value
         m.load_state_dict(torch.load(best, map_location="cpu")); m.eval()
 
         @torch.inference_mode()
