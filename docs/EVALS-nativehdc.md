@@ -17,7 +17,7 @@ Run cost: inference-only, minutes per arm. Script will be `src/g7_eval.py` (~60 
 - Blocked-on: none. Data cached at data/proofwriter_test.parquet (gitignored).
 
 ## G7b Results (2026-11-04, executed)
-Both arms warm-started from champions, fine-tuned 2500 steps on ProofWriter FT bins (data/proofwriter_ft, 3.5M tok), best checkpoint gated on ProofWriter val.
+Both arms warm-started from champions, fine-tuned 2500 steps on ProofWriter FT bins (data/proofwriter_ft, 3.5M tok), best checkpoint gated on ProofWriter val (val ppl: ghrr 2.314, vanilla 2.301).
 
 | arm | overall | d0 | d1 | d2 | d3 | d5 |
 |---|---|---|---|---|---|---|
