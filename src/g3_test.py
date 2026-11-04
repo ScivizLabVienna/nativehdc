@@ -82,7 +82,7 @@ if __name__ == "__main__":
     check("adv_margin", min(a_in) - h.adv_thr >= 0.15 and h.adv_thr - max(a_out) >= 0.15)
     check("facts_margin", min(f_in) - h.fact_thr >= 0.15 and h.fact_thr - max(f_out) >= 0.15)
 
-    best = os.path.join(RUNS, "ghrr_best.pt")
+    best = os.environ.get("GHRR_CKPT") or os.path.join(RUNS, "ghrr_best.pt")
     if "--no-live" in sys.argv or not os.path.exists(best):
         print("live generation skipped (--no-live or no checkpoint)")
     else:

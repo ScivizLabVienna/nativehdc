@@ -53,7 +53,7 @@ if __name__ == "__main__":
     check("single_bind_unbind_exact", float(similarity(unbind(bind(a1, b1), a1), b1)) > 0.999)
 
     # ---- B) live end-to-end through the gate (g3_test pattern) ----
-    best = os.path.join(RUNS, "ghrr_best.pt")
+    best = os.environ.get("GHRR_CKPT") or os.path.join(RUNS, "ghrr_best.pt")
     if "--no-live" in sys.argv or not os.path.exists(best):
         print("live part skipped (--no-live or no checkpoint)")
     else:
