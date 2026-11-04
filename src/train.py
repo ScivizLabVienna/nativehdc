@@ -43,6 +43,7 @@ if __name__ == "__main__":
     ap.add_argument("--tau", type=float, default=4.0)  # G5 ablation knob; baked value in champion ckpt = 4.0
     ap.add_argument("--nobest", action="store_true")  # smoke/ablation: never clobber runs/<arm>_best.pt
     ap.add_argument("--suffix", default="", help="tag artifacts -> runs/<arm><sfx>.jsonl / <arm><sfx>_best.pt; protects champion paths")
+    ap.add_argument("--hv-dim", type=int, default=4096)  # G6 low-D probe (model asserts hv_dim % n_heads == 0)
     args = ap.parse_args()
     CTX = args.ctx  # module-scope rebinding: batches()/evaluate() read global CTX
 
@@ -51,7 +52,7 @@ if __name__ == "__main__":
     va = torch.from_numpy(np.asarray(np.memmap(os.path.join(d, "val.bin"), dtype=np.uint16, mode="r")))
 
     torch.manual_seed(1337); np.random.seed(1337)
-    m = TinyLM(d_model=384, n_layer=6, n_heads=8, hv_dim=4096, attn_type=args.attn,
+    m = TinyLM(d_model=384, n_layer=6, n_heads=8, hv_dim=args.hv_dim, attn_type=args.attn,
               ctx=args.ctx, tau=args.tau).to(DEV)
     steps = args.steps or int(300e6 // (B * CTX))
     runs = os.path.join(HERE, "..", "runs"); os.makedirs(runs, exist_ok=True)
