@@ -1,0 +1,280 @@
+CONVERSATION: TRANSFORMERS → HDC 
+
+1. TRANSFORMER ORIGIN
+---------------------
+The Transformer architecture was introduced in the 2017 paper
+"Attention Is All You Need" by eight researchers at Google
+(equal contributors, order randomized):
+
+  - Ashish Vaswani
+  - Noam Shazeer
+  - Niki Parmar
+  - Jakob Uszkoreit
+  - Llion Jones
+  - Aidan N. Gomez
+  - Łukasz Kaiser
+  - Illia Polosukhin
+
+Key insight (Uszkoreit): attention ALONE, without RNNs, is
+sufficient for language. This unlocked massive GPU parallelism.
+
+The attention mechanism itself was introduced in 2014 by
+Dzmitry Bahdanau et al. for sequence-to-sequence models.
+
+Paper: https://arxiv.org/abs/1706.03762
+
+All eight authors have since left Google to start or join
+other AI companies.
+
+---------------------------------------------------------
+
+2. HDC (HYPERDIMENSIONAL COMPUTING) — "IT WAS THERE ALL ALONG"
+----------------------------------------------------------------
+
+Building blocks (1980s–1990s):
+
+  - Distributed representations / high-dim vectors
+    → Geoff Hinton, 1986
+
+  - Tensor-product variable binding
+    → Paul Smolensky, 1990
+    Paper: "Tensor Product Variable Binding and the
+    Representation of Symbolic Structures in Connectionist
+    Systems" (Artificial Intelligence, 1990)
+
+  - Holographic Reduced Representations (HRR) algebra
+    → Tony Plate, 1994 (PhD under Hinton)
+    Paper: "Holographic Reduced Representations for
+    Adding Structure to Vectors" (ICANN, 1994)
+
+  - Sparse Distributed Memory (SDM)
+    → Pentti Kanerva, 1988
+    Paper: "Sparse Distributed Memory" (MIT Press, 1988)
+
+The "combination" moment:
+
+  Kanerva, P. (2009). "Hyperdimensional Computing: An
+  Introduction to Computing in Distributed Representation
+  with High-Dimensional Random Vectors."
+  Neural Computation, 22(10), 2700–2715.
+  https://direct.mit.edu/neco/article/22/10/2700/754
+
+  Unified HRR, spatter codes, LSA, VSA into ONE coherent
+  algebra with three core operations: bundling, binding,
+  permutation.
+
+Key insight: "The dimensionality of an entity and the
+dimensionality of its representation for computing purposes
+are separate issues."
+
+In high-dimensional space (~10,000 dims), random vectors are
+nearly orthogonal → noise-tolerant, composable, brain-like
+computation "for free."
+
+Modern resurgence (~2023):
+  - Kanerva & Olshausen at UC Berkeley published a paper
+    that reignited interest.
+  - Quanta Magazine coverage:
+    https://www.quantamagazine.org/a-new-approach-to-
+    computation-reimagines-artificial-intelligence-20230413/
+
+---------------------------------------------------------
+
+3. CREATING INTELLIGENCE (creatingintelligence.org)
+----------------------------------------------------
+
+Paper: "Creating Intelligence" by Peter Overmann
+  - arXiv: 2606.31819 (posted June 30, 2026)
+  - https://arxiv.org/abs/2606.31819
+  - Website: https://creatingintelligence.org
+  - Code: https://github.com/PeterOvermann/CreatingIntelligence
+  - PyPI: pip install creating-intelligence
+
+Core ideas:
+  - Computational theory of mind grounded in set theory + HDC
+  - Sparse binary data (SDRs for perception, SHRs for symbols)
+  - Topological Associative Memory: associative memory from
+    network topologies with combinatorially expanded hidden layer
+  - Learning via topological plasticity (not scalar weight updates)
+  - Unification of auto-associative and hetero-associative
+    learning under one algorithm: subset pattern matching +
+    exact nearest-neighbor search
+
+MNIST demo: 96% accuracy, single pass on 60K images,
+zero hyperparameter tuning.
+
+Community discussion:
+  HTM Forum (Numenta):
+  https://discourse.numenta.org/t/creating-intelligence-a-
+  computational-foundation-for-agi/12455
+
+  Pith review (Jul 1): T0 verdict, 3 major issues.
+  Claims lack formal derivations, complexity proofs, and
+  circuit-level neuroanatomical grounding.
+
+Recent code releases (Sep–Oct 2026):
+  0.1.0a1–a3  (Sep 23–24)  Initial PyPI packaging
+  0.1.0a4     (Sep 25)     First binary wheels
+  0.1.0a5     (Oct 4)      "fraction" option; shared-circuits fix
+  0.1.0a6     (Oct 5)      KWTA pathway tag fix
+  0.1.0a8     (Oct 18)     "transition" component added
+  0.1.0a10    (Oct 31)     Associator upgraded; transition deprecated
+
+Wheels: Windows, Linux (glibc+musl), macOS ARM64,
+CPython 3.11/3.12.
+
+---------------------------------------------------------
+
+4. SIMILAR HDC / NEURO-SYMBOLIC PROJECTS
+------------------------------------------
+
+Full Cognitive Architectures (pure HDC):
+
+  - Spaun (UBC, Blondel lab, 2015)
+    2.5M spiking neurons, HRR for all data.
+    https://github.com/UBC-Blondel-Lab/spaun
+    Paper: "Towards a General Neural Substrate for Symbolic
+    Computation" (arXiv:1510.05949)
+
+  - HDC-Brain v14.1 (OlegPhenomenon, solo)
+    300M-param generative LM on pure HDC primitives.
+    GitHub: OlegPhenomenon / Zenodo DOI
+
+  - Triadic Memory (PeterOvermann, 2022)
+    Predecessor to Creating Intelligence.
+    GitHub: PeterOvermann/TriadicMemory
+
+Neuro-Symbolic + HDC Hybrids:
+
+  - CogSys (Georgia Tech, Che-Kai Liu)
+    Ferroelectric FET associative memory.
+    Real-time abduction in 0.3s / 4mm² / 1.48W.
+
+  - HDT (Hyperdimensional Transformer)
+    Replaces transformer attention with Hamming-similarity
+    binding/bundling attention.
+
+  - Episodic Bridge (Oct 2026, GitHub)
+    Plug-in layer on any unmodified transformer.
+    Converts interactions into persistent HDC episodes.
+    After 27 queries: 40.7% answered from memory.
+
+  - Erwin Transformer (Robert McMenemy, Jul 2025)
+    HDC distributed memory + explicit symbolic routing.
+
+  - BQS (Brain-Quantum-Symbolic, Mar 2026, TechRxiv)
+    Spiking NN + quantum superposition + symbolic KB.
+    Theoretical only.
+
+Hardware-First (for reference):
+
+  - Neuro-Photonix (Dec 2024) — silicon photonics
+  - HyDra (Georgia Tech) — SOT-CAM spintronic macro
+  - QHDC / QeHDC (Cleveland Clinic) — quantum gates
+
+---------------------------------------------------------
+
+5. SOFTWARE & ALGORITHMIC EFFICIENCY (no hardware)
+----------------------------------------------------
+
+Inference Speedup:
+
+  - SupHDC (Sep 2026)
+    2.01× wall-clock speedup (Raspberry Pi 5), 2.26 pp loss.
+    Selective fallback recovers accuracy.
+
+  - ApproxHDC (Jun 2026)
+    17.25× CPU / 15.02× GPU speedup under QoS constraints.
+    3.49× better than MicroHD.
+
+  - ScalableHD (Jun 2025)
+    Up to 10× throughput over TorchHD; near-linear CPU scaling.
+
+  - MCR (Modular Composite Representations, Jul 2026)
+    Up to 3 orders of magnitude speedup vs software baseline.
+
+  - HDCC (HDC Compiler, 2023)
+    25× avg / 132× peak speedup vs Python; 5× memory reduction.
+
+Compression / Memory:
+
+  - DecoHD (Feb 2026)
+    97% fewer trainable params; 35× faster inference.
+
+  - DPQ-HD (May 2025)
+    20–100× memory reduction; 56× faster inference on MCU.
+
+  - ByteHD (May 2026)
+    8× memory compression (bipolar → bit-packed).
+
+  - FATE (Jun 2025)
+    38.75% compression; <0.5% accuracy loss.
+
+Training Efficiency:
+
+  - Tufts Neuro-Symbolic VLA (Feb 2026, ICRA Vienna)
+    34 min training vs 36+ hrs (1% energy).
+    95% vs 34% accuracy. 78% on unseen tasks vs 0%.
+
+  - HDC vs DNN (Sustainable Manufacturing, Feb 2026)
+    200× training energy reduction vs ResNet/MC-DenseNet.
+    175–1000× inference energy reduction.
+
+  - Creating Intelligence (MNIST, Jun 2026)
+    96% accuracy, single pass, zero hyperparameter tuning.
+
+  - Large-Margin HDC (Jul 2026)
+    Stable training at D=500 where standard HDC overfits.
+
+Accuracy Gains (efficiency-neutral):
+
+  - Universal HDC Encoding (Frontiers in AI, Sep 2026)
+    First unified encoder design framework.
+
+  - QHDC (Jun 2026)
+    500× speedup over classical HDC for symbolic reasoning.
+
+  - Qubit-Efficient Quantum Search (Jul 2026)
+    O(log D) qubits; up to 2,000× fewer qubits.
+
+---------------------------------------------------------
+
+6. KEY LIBRARIES
+-----------------
+
+  - torchhd (376 stars) — PyTorch, 8 VSA models
+    https://github.com/hd-ai/torchhd
+
+  - hdlib 2.0 (35 stars) — pip install hdlib
+    Quantum HDC, clustering, graph learning.
+    https://github.com/hd-ai/hdlib
+
+  - bayes-hdc v0.5 — JAX-native, Gaussian/Dirichlet HVs
+
+  - HDTorch (EPFL) — PyTorch + CUDA for GPU hypervector ops
+
+  - OpenHD (UCSD) — GPU framework; 10.5× faster classification
+
+  - creating-intelligence — pip install creating-intelligence
+    https://github.com/PeterOvermann/CreatingIntelligence
+
+---------------------------------------------------------
+
+7. THE PATTERN
+---------------
+
+Transformers (2017):
+  "We don't need the RNN — just attention."
+  → GPT, BERT, Llama, Gemini.
+
+HDC (2009 → 2026):
+  "We don't need backprop or matrix multiplication —
+  just bundling and binding."
+  → Creating Intelligence, HDC-Brain, CogSys.
+
+The field is at the stage transformers were in ~2016:
+primitives proven, but no "GPT-2 moment" yet.
+
+=========================================================
+END OF CONVERSATION
+=========================================================   

@@ -39,6 +39,9 @@ best val PPL grid (ghrr@3e-4, --nobest):
 - Realized gain (−1.9 %) again undershot the 20 k-probe extrapolation (−3–5 %): third confirmation that short-probe deltas compress at full budget — discount probe-prize estimates roughly half.
 - **Pitfall: checkpoints carry no τ scalar** (construct-time arg only). g3_test/phase4_demo now honor `GHRR_TAU` env; always match it to the training value, else scores are mis-scaled while load_state_dict succeeds silently.
 
+## External landscape & positioning (2026-11)
+See `docs/external-landscape-2026-11.md` (+ raw digests archived in `docs/pastes/`). One-line position: HD-attention work forks into binarized/similarity attention replacement (HDT-line) and sidecar memory over frozen LMs (Episodic Bridge-line, 40.7%@27q unconfirmed); nativehdc holds a third point - standard differentiable attention + FHRR phase geometry, trained jointly, measured in substrate-agnostic val PPL (CogSys HPCA'25 verified anchor for HW mapping). Low-D literature (VS-Graph D=128, Large-Margin D=500) motivates pending G6 hv_dim probe. sciknoworg awesome-list = eval-suite upgrade pool; neuro-symbolic-ai org = program-synthesis lineage contrast (+ same LunarBioVerse demo as our CI POC).
+
 ## Standing ops lessons (enforced in tooling)
 - `--nobest` for any short run; `--suffix` for full runs that must not touch champion paths (both smoke-proven via mtime isolation).
 - Watch-pattern notices can replay stale lines — always verify live before acting.

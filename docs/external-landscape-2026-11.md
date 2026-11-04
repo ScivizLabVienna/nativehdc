@@ -1,0 +1,27 @@
+# External HDC landscape — integration digest (2026-11-04)
+
+Source: two operator-provided binpaste digests (raw copies archived in `docs/pastes/`, extracted 2026-11-03 via binpaste's Firebase RTDB — the site itself serves an SPA shell to fetchers). Secondary sources: claims spot-checked where load-bearing, per-item reliability marked below.
+
+## How each cluster maps onto THIS repo
+| Cluster | Verdict for nativehdc/hdc-harness | Action |
+|---|---|---|
+| **HD-attention competitors**: HDT/"HDT" family (Hamming-sim binding/bundling attention; BiHDTrans arXiv:2509.24425 verified as instance), Erwin Transformer, HDC-Brain (300M pure-HD LM) | Closest external analogs to our GHRR phase-score attention. Differentiators we must state in any writeup: our kernel is a differentiable FHRR *phase* rotation trained end-to-end inside standard attention; theirs replace attention with similarity/binarized ops or drop backprop. | related-work cite; no rerun |
+| **Memory-sidecar analog**: Episodic Bridge (HDC episode layer on unmodified transformer; paste claims 40.7% after 27 queries) [reliability: UNCONFIRMED — search did not locate exact repo] | Validates our Hillock/G1 sidecar direction and gives a comparison datapoint for the harness writeup even before we rerun it. | cite-with-caveat; feeds deferred Hillock sidecar spec |
+| **Low-dimensional pressure**: VS-Graph accuracy at D=128 (arXiv:2512.03394), Large-Margin HDC stable at D=500, DecoHD 97% fewer params, DPQ-HD 20-100x compression (arXiv:2505.05413), ByteHD 8x bitpacking | Directly challenges our hv_dim=4096 default — but those results are bundled-classifier regime; our own G4 says retrieval capacity ~D/ln D, and attention tables are a different mechanism. Probe, don't assume. | **proposed G6**: hv_dim {1024, 512} @ tau8/ctx64/20k vs 7.45 baseline (~2x1 h). If PPL neutral: binding matrices shrink (D^2 params), halving model size for free. |
+| **Full-stack hardware**: CogSys HPCA'25 Best Paper (arXiv:2503.01162 **verified**), FeFET/ReRAM/photonic CiM line, memristive crossbar language-ID | Our GPU PPL work is substrate-agnostic; CogSys is the anchor citation for "algorithm-hardware co-design" motivation and shows HW is ahead of an HDC *framework*. | motivation-section cites only |
+| **Encoders**: Universal Encoder framework (separation ~2-3 needed for decode; learning peaks 0.8-1.2) | Backs our margin-based threshold calibration doctrine (stopword filter, citation hit_min) with external theory. | FINDINGS methodology cite |
+| **Libraries**: torchhd (classifiers), hdlib, HDTorch/OpenHD (GPU HV ops), creating-intelligence | torchhd/OpenHD territory we already cover with plain torch matmul; skip adoption. **creating-intelligence 0.1.0a10 (Oct 31) rewrote the associator + deprecated transition — our POC is pinned to an older a-build: bump = changed retrieval behavior, must re-run POC gates.** | POC bump deferred; decision recorded |
+| **Position paper takeaway**: no PyTorch-equivalent HDC/NeSy framework exists (CogSys closest, but it's an accelerator) | Our niche: small readable trainable toolchain (this repo + hdc-harness). Strengthens ScivizLab/paper framing. | positioning statement below |
+
+## Positioning statement (draft, for FINDINGS/paper)
+HDC attention work so far forks into (a) binarized/similarity attention replacements (HDT-line) and (b) sidecar memories over frozen LMs (Episodic Bridge-line). nativehdc occupies a third point: keep standard differentiable attention, inject FHRR phase geometry, train jointly — measured on LM perplexity, the substrate-agnostic metric that maps onto FeFET/ReRAM crossbars (CogSys precedent). The missing PyTorch-grade HDC toolchain is what this repo + harness demonstrably begin to be.
+
+## Reference repositories (operator-provided 2026-11-04, verified via GitHub API)
+| Repo | What it actually is | Integration verdict |
+|---|---|---|
+| yamilogic/Ai-CORE-Neuro-Symbolic-Frontiers (0 stars, pushed 2026-10-21) | Auto-taxonomy folder dump of NeSy x RL method names (Abductive_RL, ILR, MCTS, Tool_Use...), "Collection 18" Ai-CORE branch; no README at root | Index-only. No HDC content; nothing runnable. Cite as taxonomy at most. **Skip for compute.** |
+| sciknoworg/awesome-neurosymbolic-ai (6 stars, curated) | Benchmark catalog by reasoning family: reasoning-shortcut checks, compositional generalization, KG/ontology reasoning, logic/entailment + theorem proving, suites/generators, NeSy evaluation methodology + known gaps | **Most useful of the three**: candidate pool for upgrading our eval suite beyond TinyStories PPL + toy gates. Pick-list later = one text-only benchmark from "Language, Semantic Parsing & Compositional Generalization" or "Logic/Entailment" (cheap to score with our 39M models; vision/robotics families out of scope). |
+| github.com/neuro-symbolic-ai (org, 22 repos) | LLM+symbolic-program school (Guha et al.): flagship `peirce` (LLM-driven modular NeSy framework, 43 stars), LangSpace/LangVAE, EMNLP'24 NLE tutorial repos, **LunarBioVerse** (= user's POC demo!). Content-effects fine-tuning + latent-math lines | Different lineage from HDC (program synthesis/verification, not vector symbolic). Use as related-work contrast axis; watch `peirce` only. Interesting overlap: their LunarBioVerse = same demo our CI POC targets — the org is a reference for that eval too. |
+
+## Proposed queue change
+G6 hv_dim probe (above) added as proposed next step pending operator go; all else = citations/positioning, no compute.

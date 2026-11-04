@@ -1,0 +1,125 @@
+RECENT PAPERS: SIMPLIFICATION, EFFICIENCY & FULL-STACK INTEGRATION OF NEUROSYMBOLIC HDC
+========================================================================================
+
+1. EFFICIENCY / SIMPLIFICATION
+------------------------------
+
+DPQ-HD (2025)
+  Post-training compression: decomposition -> pruning -> quantization.
+  20-100x memory reduction, 1-2% accuracy drop. 56x faster inference on ATmega328P MCU.
+  No retraining needed.
+  Ref: arxiv.org/abs/2505.05413
+
+DecoHD (2026)
+  Decomposed hypervector classification under extreme memory budgets.
+  ASIC: 277x energy efficiency at 0.38x memory. Shallow factorization preferred for throughput.
+  Ref: arxiv.org/html/2511.03911
+
+VS-Graph (2025)
+  VSA graph learning without backprop. 450x training speedup vs GNNs.
+  Maintains accuracy at D=128 (vs 8192).
+  Ref: arxiv.org/abs/2512.03394
+
+Low-Dim VSA + BN/KD (2025)
+  Trains VSAs like BNNs with BatchNorm + Knowledge Distillation.
+  ~2% memory of standard VSA (5-50 KB vs 1300 KB), <30% latency.
+  Ref: lacuna.tiptreesystems.com (Tiptree Systems work report)
+
+FactorHD (DAC 2025)
+  Multi-object/multi-class factorization model.
+  5667x speedup at 10^9 representation size vs existing HDC.
+  Ref: dl.acm.org/doi/10.1109/DAC63849.2025.11132886
+
+SSP-BO (Nature Communications, 2026)
+  Compositional neurosymbolic VSA for active exploration.
+  O(d^2) time/memory (constant in n). 60-200x compute reduction, 30-188x energy reduction on neuromorphic HW.
+  Ref: nature.com/articles/s41467-026-75703-4
+
+Universal Encoder (Frontiers in AI, 2026)
+  First unified framework for HDC encoder design.
+  Decoding needs separation ~2-3; learning peaks at ~0.8-1.2. No one-size-fits-all yet.
+  Ref: frontiersin.org (Frontiers in AI, 2026)
+
+XL-HD (2026)
+  Algorithm-hardware co-designed HDC for ReRAM crossbars.
+  Inference energy < 0.40 uJ; 99.7% efficiency gain over CPU.
+  Ref: arxiv.org/html/2605.24788
+
+
+2. FULL-STACK INTEGRATION (algorithm -> hardware -> system)
+-----------------------------------------------------------
+
+CogSys (HPCA 2025, Best Paper)
+  Algorithm (vector factorization) + HW (reconfigurable nsPE, bubble-streaming dataflow)
+  + system (adaptive scheduler). >75x speedup over TPU, 4-96x over GPUs, 4 mm^2, 1.48 W.
+  Ref: arxiv.org/abs/2503.01162
+
+UnO-NeSy (Oct 2026)
+  Unified 2FeFET-2R CiM array for both neural MAC and HDC symbolic reasoning.
+  End-to-end simulator + automated optimizer. 96.2% RAVEN accuracy under HW non-idealities;
+  61.8% higher energy efficiency after optimization.
+  Ref: arxiv.org/abs/2610.26530
+
+1FeFET-1C CiM (2024)
+  Ferroelectric charge-domain CiM handling both neuro (MAC) and symbolic (associative search)
+  in one array. 2x latency, 1000x energy vs GPU. Fabricated and tested.
+  Ref: arxiv.org/abs/2410.15296
+
+Neuro-Photonix (2024)
+  Silicon photonics near-sensor: analog neural MAC + HDC vector generation in one photonic core.
+  30 GOPS/W, 20.8x power reduction vs ASIC. First near-sensor NeSy photonic accelerator.
+  Ref: arxiv.org/abs/2412.10187
+
+Memristive Crossbar (Nature Communications, Jul 2026)
+  Analog in-memory HDC on multicore SoC. 90% HW resource reduction, 95.24% language ID accuracy.
+  Ref: nature.com/articles/s41467-026-76067-5
+
+HDReason (2024)
+  First FPGA co-design for HDC knowledge graph completion.
+  Algorithm + encoder IP + score IP + training IP on Xilinx Alveo U280.
+  Ref: arxiv.org/html/2403.05763v1
+
+Quantum HDC (2025/2026)
+  Direct mapping of HDC primitives to quantum subroutines.
+  ~500x speedup over VQC/QSVC baselines at D=128. First NISQ implementation.
+  Ref: nature.com/articles/s44335-026-00064-6
+
+
+3. SURVEYS / POSITION PAPERS ON FULL-STACK NeSy
+-----------------------------------------------
+
+Ravikumar, Song & Neema (Wiley, Mar 2026)
+  Survey of NeSy HW/SW co-design: SRAM/ReRAM, FeFET, systolic arrays, coupled oscillator logic.
+  Identifies full-stack NeSy as key open challenge.
+  Ref: onlinelibrary.wiley.com/doi/10.1002/9781394302406.ch11
+
+Yale TCS (2025)
+  Hardware-software co-design survey: classifies NeSy into Sequential / Multi-Integration / Hybrid.
+  Calls for heterogeneous CPU+GPU+VSA systems.
+  Ref: csl.yale.edu/~rajit/ps/TCSII3336251.pdf
+
+Purdue NanoX NeSy (ongoing)
+  CMOS+X nanokernels (digital MAC, analog MAC, MAP, distance search)
+  integrated into 2D/2.5D/3D NeSy architectures.
+  Ref: engineering.purdue.edu/NanoX/projects/nesy/
+
+
+4. KEY TAKEAWAYS
+----------------
+
+1. The efficiency frontier is post-training compression + low dimensionality.
+   DPQ-HD, DecoHD, and VS-Graph all show you can cut dimensions from 10,000 -> 128-512
+   with <2% accuracy loss, making MCU-class deployment practical.
+
+2. Full-stack integration is converging on in-memory computing.
+   FeFET (UnO-NeSy, 1FeFET-1C), ReRAM (XL-HD, memristive crossbar), and photonic
+   (Neuro-Photonix) substrates all unify the "neuro" and "symbolic" halves in one
+   physical fabric -- eliminating the memory wall.
+
+3. The biggest remaining gap is the algorithmic side.
+   Hardware is ahead; there's no general-purpose neurosymbolic HDC "framework"
+   equivalent to PyTorch. CogSys is the closest, but it's a research accelerator,
+   not a production toolchain.
+
+4. Quantum HDC is the most speculative but has the cleanest theoretical mapping --
+   HDC operations are already quantum-native (Hadamard = bundling, CNOT = binding).   
