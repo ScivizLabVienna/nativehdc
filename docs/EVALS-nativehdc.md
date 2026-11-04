@@ -11,4 +11,7 @@ Known bias, accepted deliberately: many theories exceed ctx=64 tokens (pos table
 Gate (pre-registered): G7 passes if ghrr beats vanilla on aggregate accuracy by >1pp on Short-Q AND the per-depth decay slope is shallower for ghrr; ties => report both, no promotion pressure from G7 alone.
 Run cost: inference-only, minutes per arm. Script will be `src/g7_eval.py` (~60 lines) once probes land and the harness pattern is copied from g3_test.
 
-Blocked-on: none (data verified reachable 2026-11-04). Deferred until G6 hv_dim probes + their verdict commit are done, to keep one variable per step.
+## Result — zero-shot run (2026-11-04, src/g7_eval.py, n=500/depth x 5 depths)
+- ghrr (tau8 champ): overall **0.271**; vanilla (G2 arm): **0.266**. Both FLAT across depth-0..5. Verdict: **zero-shot discriminates nothing** at TinyStories scale — degenerate majority-class regime (constant "True" ~= 27 % base rate). +0.5 pp ghrr = noise, not the hypothesized binding advantage. Null result, reported as-is; G7-gate inconclusive by construction, not failed.
+- **G7b (required follow-up)**: fine-tune both arms on proofwriter train split (~20k steps, TinyStories-mixed replay to avoid PPL catastrophic drift), then re-score test by depth. Only trained models can hit the depth-wall axis; published depth results are all finetuned too. ~1 GPU-day total for two 39M arms — queue decision with G6 verdict.
+- Blocked-on: none. Data cached at data/proofwriter_test.parquet (gitignored).
