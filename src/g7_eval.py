@@ -30,7 +30,7 @@ def main():
     ckpt = os.environ.get("GHRR_CKPT", os.path.join(HERE, "..", "runs", "ghrr_best.pt"))
     dev = "cuda" if torch.cuda.is_available() else "cpu"
     tk = AutoTokenizer.from_pretrained("gpt2")
-    m = TinyLM(attn_type=os.environ.get("GHRR_ARM", "ghrr"), tau=float(os.environ.get("GHRR_TAU", "4")))  # ckpt carries no tau/arm; envs must match training
+    m = TinyLM(attn_type=os.environ.get("GHRR_ARM", "ghrr"), tau=float(os.environ.get("GHRR_TAU", "4")), hv_dim=int(os.environ.get("GHRR_HV", "4096")))  # ckpt carries no tau/arm; envs must match training
     m.load_state_dict(torch.load(ckpt, map_location=dev)); m.eval().to(dev)
     a1 = [tk.encode(" " + a, return_tensors="pt")[0, 0].item() for a in ANS]  # first-token scoring only: keeps input <= ctx
     rows = load_rows()[:limit] if limit else load_rows()
