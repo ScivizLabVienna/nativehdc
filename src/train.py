@@ -44,16 +44,21 @@ if __name__ == "__main__":
     ap.add_argument("--nobest", action="store_true")  # smoke/ablation: never clobber runs/<arm>_best.pt
     ap.add_argument("--suffix", default="", help="tag artifacts -> runs/<arm><sfx>.jsonl / <arm><sfx>_best.pt; protects champion paths")
     ap.add_argument("--hv-dim", type=int, default=4096)  # G6 low-D probe (model asserts hv_dim % n_heads == 0)
+    ap.add_argument("--init", default="", help="warm-start weights from ckpt (G7b finetune); architecture args must match")
+    ap.add_argument("--data", default="", help="dir with train.bin/val.bin (default: repo data/; G7b uses data/proofwriter_ft)")
     args = ap.parse_args()
     CTX = args.ctx  # module-scope rebinding: batches()/evaluate() read global CTX
 
-    d = os.path.join(HERE, "..", "data")
+    d = args.data or os.path.join(HERE, "..", "data")  # G7b fine-tune bins live elsewhere
     tr = torch.from_numpy(np.asarray(np.memmap(os.path.join(d, "train.bin"), dtype=np.uint16, mode="r")))
     va = torch.from_numpy(np.asarray(np.memmap(os.path.join(d, "val.bin"), dtype=np.uint16, mode="r")))
 
     torch.manual_seed(1337); np.random.seed(1337)
     m = TinyLM(d_model=384, n_layer=6, n_heads=8, hv_dim=args.hv_dim, attn_type=args.attn,
-              ctx=args.ctx, tau=args.tau).to(DEV)
+              ctx=args.ctx, tau=args.tau)
+    if args.init:  # G7b: fine-tune from champion; keep seed-1337 init path untouched for from-scratch arms
+        m.load_state_dict(torch.load(args.init, map_location="cpu"))
+    m = m.to(DEV)
     steps = args.steps or int(300e6 // (B * CTX))
     runs = os.path.join(HERE, "..", "runs"); os.makedirs(runs, exist_ok=True)
     logf = open(os.path.join(runs, f"{args.attn}{args.suffix}.jsonl"), "a")
