@@ -24,4 +24,4 @@ Both arms warm-started from champions, fine-tuned 2500 steps on ProofWriter FT b
 | ghrr@t8/hv1024-FT | 0.501 | 0.540 | 0.458 | 0.496 | 0.488 | 0.524 |
 | vanilla-FT | 0.499 | 0.520 | 0.460 | 0.502 | 0.500 | 0.514 |
 
-Gate (ghrr > vanilla by >1pp AND shallower depth slope): **FAIL — null**. Delta +0.2pp, both slopes flat (sigma/stratum ~2.2pp). depth-4 absent in parquet shard 0; subset identical across arms. Interpretation: +23pp over zero-shot is domain adaptation; neither architecture reaches multi-hop regime at 13M params. Follow-up candidates (not queued): >=100M-param arms, or synthetic-rule FT with held-out rule sets.
+Gate (ghrr > vanilla by >1pp AND shallower depth slope): **FAIL — null**. Delta +0.2pp, both slopes flat (sigma/stratum ~2.2pp). depth-4 absent in parquet shard 0; subset identical across arms. Interpretation: +23pp over zero-shot is domain adaptation; neither architecture reaches multi-hop regime at these arm sizes (ghrr 36M / vanilla 64M). Follow-up candidates (not queued): >=100M-param arms, or synthetic-rule FT with held-out rule sets.
