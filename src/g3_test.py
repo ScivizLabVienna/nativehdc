@@ -91,7 +91,7 @@ if __name__ == "__main__":
         from model import TinyLM
         torch.set_num_threads(6)
         tk = AutoTokenizer.from_pretrained("gpt2")
-        m = TinyLM(attn_type="ghrr", tau=float(os.environ.get("GHRR_TAU", "4")), hv_dim=int(os.environ.get("GHRR_HV", "4096")))  # ckpt carries no tau; env must match training value
+        m = TinyLM(attn_type="ghrr", tau=float(os.environ.get("GHRR_TAU", "16")), hv_dim=int(os.environ.get("GHRR_HV", "1024")))  # ckpt carries no tau; env must match training value
         m.load_state_dict(torch.load(best, map_location="cpu")); m.eval()
 
         @torch.inference_mode()

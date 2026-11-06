@@ -79,7 +79,7 @@ story.append(Paragraph(
     "matches the HoloVec oracle to 2.4e-7 on binding and the hash encodings reproduce across interpreter restarts without any "
     "hash-seed patching tricks beyond one documented rule. The second produced a qualified keep: at matched budget GHRR lost the "
     "bake-off by 12.7&nbsp;%, closed to +8.3&nbsp;% with one learning-rate correction, and stayed inside the ±10&nbsp;% margin we had fixed in advance. "
-    "Two follow-up ablations beat the baseline instead: sharpening the binding temperature (τ 4 → 8) gained 1.9&nbsp;% validation perplexity, and — our main result — cutting the hypervector dimension from 4096 to 1024 cut parameters by 44.2&nbsp;% (64.2&nbsp;M → 35.9&nbsp;M) "
+    "Two follow-up ablations beat the baseline instead: sharpening the binding temperature (τ 4 → 16 over two promotions) gained 2.7&nbsp;% validation perplexity, and — our main result — cutting the hypervector dimension from 4096 to 1024 cut parameters by 44.2&nbsp;% (64.2&nbsp;M → 35.9&nbsp;M) "
     "<i>and</i> improved perplexity (5.853 → 5.831), with the associative-memory gates still green. A capacity experiment shows why a floor exists: facts bundled into one D=4096 vector saturate at ~246 items, matching HDC theory to within noise. On ProofWriter rule chains, both architectures sit in the same majority-class regime zero-shot (0.271 vs 0.266) and stay statistically indistinguishable after fine-tuning (0.501 vs 0.499, flat across inference depth). The negative results are reported as negatives; a four-arm seed-variance study (folded into Section&nbsp;5.3 at this second printing) confirms the dimension-shrink advantage across paired seeds but demotes its headline magnitude to equal-or-marginal-better-and-strictly-cheaper.", ABS_))
 story.append(Spacer(0, 4))
 
@@ -97,7 +97,7 @@ story.append(Paragraph(
 story.append(Paragraph("Three claims this log can defend:", H2))
 for b in [
     "<b>GHRR attention trains stably end-to-end</b> in a 36–64&nbsp;M parameter LM (181.8&nbsp;M-token TinyStories budget, RTX 3090) — oracle-verified numerics, finite gradients everywhere, no NaN across ~50 GPU-hours of runs.",
-    "<b>The binding score temperature is a first-class hyperparameter</b>, worth −1.9&nbsp;% validation perplexity on its own (τ=8), with diminishing returns starting at τ≈8–16.",
+    "<b>The binding score temperature is a first-class hyperparameter</b>: cumulative −2.7&nbsp;% validation perplexity from τ=4 to the τ=16 champion, realized in two paired replications (−1.9&nbsp;% then −0.7&nbsp;%), with diminishing returns after τ≈8.",
     "<b>Four times less hypervector capacity costs nothing and gains something:</b> D=1024 beats D=4096 at full training budget while using 44.2&nbsp;% fewer parameters — provided the memory-workload design keeps per-vector bundle counts far below the theoretical ~D/(2·ln&nbsp;D) ≈ 246-item saturation point.",
 ]:
     story.append(Paragraph(b, HYPH, bulletText="•"))
@@ -174,7 +174,7 @@ story.append(Paragraph(
 fig("fig2_hdim.png".replace("hdim", "hvdim"), "Figure 2 — G6 probe grid at matched steps; the full-budget promotion check (5.853 → 5.831) is annotated in-panel.")
 story.append(Paragraph(
     "Crucially, shrinking was accepted only after the capacity story held: with D=1024 and τ=8 set in the environment contract, the adversarial harness gate still passes 10/10 named assertions and the associative-memory demo 5/5. The interpretation we attach — a hypothesis to falsify later, not a proven mechanism — is that at this scale attention has ~64 positions to bind; "
-    "a 1024-dimensional phase code saturates that job, and the freed parameters mostly remove overfitting surface. <b>G8 settled this while this paper was in press.</b> Two fresh seeds per dimension: hv1024 {5.859, 5.853}, hv4096 {5.894, 5.887} — the shrink advantage is real but small (paired deltas −0.035 and −0.034 at matched seeds; means 5.848±0.015 vs 5.878±0.022), and seed&nbsp;1337, the seed every champion in this log used, is an easy draw that shifts both architectures by ≈ −0.03. Honest headline: <b>D=1024 is equal-or-marginal-better and strictly cheaper</b> (−44.2&nbsp;% parameters), not the clean −0.4&nbsp;% win single-champion numbers implied. Our pre-registered rule (“both-seed hv1024 mean &lt; 5.853”) fails by 0.003, so we demote the wording while keeping champion weights and architecture on paired evidence plus a zero-cost downside.", BODY))
+    "a 1024-dimensional phase code saturates that job, and the freed parameters mostly remove overfitting surface. <b>G8 settled this while this paper was in press.</b> Two fresh seeds per dimension: hv1024 {5.859, 5.853}, hv4096 {5.894, 5.887} — the shrink advantage is real but small (paired deltas −0.035 and −0.034 at matched seeds; means 5.848±0.015 vs 5.878±0.022), and seed&nbsp;1337, the seed every champion in this log used, is an easy draw that shifts both architectures by ≈ −0.03. Honest headline: <b>D=1024 is equal-or-marginal-better and strictly cheaper</b> (−44.2&nbsp;% parameters), not the clean −0.4&nbsp;% win single-champion numbers implied. Our pre-registered rule (“both-seed hv1024 mean &lt; 5.853”) fails by 0.003, so we demote the wording while keeping champion weights and architecture on paired evidence plus a zero-cost downside. <b>G9 then took the title:</b> τ=16 at D=1024 beat the τ=8 champion on both seeds they share — 5.815 vs 5.859 (seed&nbsp;7) and 5.793 vs 5.831 (seed&nbsp;1337), mean 5.804±0.031 over the two arms — replicated on paired seeds before promotion this time, gates re-passed at the new scalars, and the harness defaults now bake τ=16/D=1024 so a bare eval cannot silently load the wrong geometry.", BODY))
 
 story.append(Paragraph("5.4&nbsp;&nbsp;Why a floor exists: bundled-superposition capacity", H2))
 story.append(Paragraph(
@@ -221,7 +221,7 @@ story.append(Paragraph(
 story.append(Paragraph("8&nbsp;&nbsp;Limitations, stated before someone else states them", H1))
 for b in [
     "m=1 only. We tested the phase-kernel degenerate case, not GHRR's flagship multi-binding matrices (D=heads, m=context). Any stronger claim about GHRR proper is out of scope for these numbers.",
-    "The D-shrink claim now has paired replication at three seeds (all deltas negative); the τ-gain (−1.9 %) remains a same-seed paired result, unreplicated elsewhere — treat its magnitude as ±0.5 %.",
+    "Both headline claims now have paired replication: D-shrink at three seeds, τ=16 at two ({7,&nbsp;1337}); seed&nbsp;13 was never run for τ=16 arms, and every number here is one tiny LM on one 95 MB corpus — magnitudes should be read as this stack's, not universal.",
     "Every champion predating G8 was trained on seed 1337, an easy draw (~ −0.03 ppl for both arms): quote the §5.3 table means, never best-of-seed.",
     "TinyStories perplexity under an exhausted-corpus protocol (~1.65 epochs, 181.8&nbsp;M tokens): internally consistent, externally incomparable — including against the GHRR paper's own Wikitext2 setting.",
     "Vanilla arm untuned at the winning LR neighborhood (stated fairness note cuts both ways: a tuned vanilla baseline may close most of what is left).",
@@ -233,7 +233,7 @@ for b in [
 # ------------------------------------------------------------------ 9 future + g8
 story.append(Paragraph("9&nbsp;&nbsp;Next steps (queue order)", H1))
 for b in [
-    "<b>G8 done (post-press):</b> four arms, 11.7 total GPU-hours; outcome folded into §5.3 — shrink survives pairing, headline demoted to equal-or-marginal-better-and-cheaper, champion retained.",
+    "<b>G8 done (post-press):</b> four arms, 11.7 total GPU-hours; outcome folded into §5.3 — shrink survives pairing, headline demoted to equal-or-marginal-better-and-cheaper. <b>G9 (2026-11-06):</b> τ=16 confirmed on two paired seeds and promoted; new champion = GHRR, τ=16, D=1024, mean 5.804±0.031.",
     "<b>Full-budget τ=16 confirmation</b> only if G8 shows seed noise below its expected 1–2&nbsp;% probe delta.",
     "<b>m&gt;1 block-attention prototype</b>: the paper's actual regime (short context, D=heads), which also raises the Figure-3 capacity floor — currently the largest untested claim in the whole project.",
     "<b>≥100&nbsp;M-parameter ProofWriter arms</b>, or synthetic-rule fine-tuning with held-out rule templates, before anyone reports a depth-wall result from this line of work.",
