@@ -116,8 +116,8 @@ story.append(Paragraph(
     "Python 3.13 · PyTorch 2.14.1+cu126 · single RTX 3090 (24&nbsp;GB) · CUDA via uv-managed venv. The LM (<font face='Courier' size='8'>TinyLM</font>) is a stock decoder-only Transformer: "
     "d_model&nbsp;=&nbsp;384, 6 layers, 8 heads, tied embeddings, context 64, bf16 — identical in both arms except the attention kernel. Table&nbsp;1 states the configuration that produced our champion.", BODY))
 
-tbl = [trow(["Setting", "Champion (promoted 2026-11-04)"], True)] + \
-      [trow(r) for r in [["Attention", "GHRR phase kernel, m=1, τ=8"],
+tbl = [trow(["Setting", "Champion (G9, promoted 2026-11-06)"], True)] + \
+      [trow(r) for r in [["Attention", "GHRR phase kernel, m=1, τ=16"],
                           ["Hypervector dim D", "1024 (was 4096 before gate G6)"],
                           ["Parameters", "35.9 M (64.2 M at D=4096; −44.2 %)"],
                           ["Optimizer", "Adam-family, cosine schedule, peak LR 3e-4, warmup 500"],
@@ -233,7 +233,7 @@ for b in [
 # ------------------------------------------------------------------ 9 future + g8
 story.append(Paragraph("9&nbsp;&nbsp;Next steps (queue order)", H1))
 for b in [
-    "<b>G8 done (post-press):</b> four arms, 11.7 total GPU-hours; outcome folded into §5.3 — shrink survives pairing, headline demoted to equal-or-marginal-better-and-cheaper. <b>G9 (2026-11-06):</b> τ=16 won all three paired seeds against the old champion; new champion = GHRR, τ=16, D=1024, mean 5.804±0.031.",
+    "<b>G8 done (post-press):</b> four arms, 11.7 total GPU-hours; outcome folded into §5.3 — shrink survives pairing, headline demoted to equal-or-marginal-better-and-cheaper. <b>G9 (2026-11-06):</b> τ=16 won all three paired seeds against the old champion — caveat: the D-shrink that earned G8's cost story costs associative capacity (bundled recall 0.54 vs 1.00 at K=256, probe G10); keep D=4096 if you use the vectors as memory; new champion = GHRR, τ=16, D=1024, mean 5.804±0.031.",
     "<b>Full-budget τ=16 confirmation</b> only if G8 shows seed noise below its expected 1–2&nbsp;% probe delta.",
     "<b>m&gt;1 block-attention prototype</b>: the paper's actual regime (short context, D=heads), which also raises the Figure-3 capacity floor — currently the largest untested claim in the whole project.",
     "<b>≥100&nbsp;M-parameter ProofWriter arms</b>, or synthetic-rule fine-tuning with held-out rule templates, before anyone reports a depth-wall result from this line of work.",
