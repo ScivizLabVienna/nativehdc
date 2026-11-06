@@ -22,3 +22,8 @@ while multi-hop downstream transfer is null. All accept/reject rules were fixed 
 null and marginal results are reported without promotion.
 
 Blockers when ready: arXiv account (email verification) + possible endorsement for first-time cs.CL posters.
+
+## Launch posts (paste once Zenodo DOI exists)
+HN title: Native Hyperdimensional Attention, Made Small – gate-disciplined GHRR bake-off on TinyStories
+HN body: Working code + 10-page paper. FHRR phase-kernel attention beats vanilla causal attention by 12.7% PPL at 36M params; later gates cut hypervector dim 4x for free, then honest nulls (no multi-hop advantage; measured capacity-vs-PPL tradeoff). Pre-registered margins, paired seeds, full verdict log in repo. DOI: <add>
+HF Papers: title as above, attach whitepaper PDF, DOI field from Zenodo, code link = repo.
