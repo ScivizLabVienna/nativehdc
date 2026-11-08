@@ -1,0 +1,17 @@
+== X1: unique-tag charts vs flat, K=512, D sweep ==
+D=  512  FLAT=['0.007', '0.013', '0.027']  SHEAF=['1.000', '1.000', '1.000']  SHARD=['1.000', '1.000', '1.000']
+D= 1024  FLAT=['0.073', '0.080', '0.100']  SHEAF=['1.000', '1.000', '1.000']  SHARD=['1.000', '1.000', '1.000']
+D= 4096  FLAT=['0.793', '0.767', '0.853']  SHEAF=['1.000', '1.000', '1.000']  SHARD=['1.000', '1.000', '1.000']
+== X2: rel-pool granularity, K=512, D=1024 ==
+nrel=  2  FLAT=['0.027', '0.027', '0.000']  SHEAF=0.147 0.180 0.173
+nrel=  8  FLAT=['0.040', '0.047', '0.067']  SHEAF=0.627 0.653 0.687
+nrel= 32  FLAT=['0.060', '0.093', '0.047']  SHEAF=0.840 0.847 0.893
+== X3 (exploratory): identity-map vs random-phase maps, unique tags D=1024 ==
+seed=7: sheaf(random)=1.000  sheaf(identity)=1.000  diff=0.0000
+seed=13: sheaf(random)=1.000  sheaf(identity)=1.000  diff=0.0000
+== X4 (exploratory): depth-3, unique tags, D=1024 ==
+seed=7: FLAT@3=0.027  SHARDchart@3=1.000  (chains=146)
+seed=13: FLAT@3=0.027  SHARDchart@3=1.000  (chains=149)
+seed=1337: FLAT@3=0.020  SHARDchart@3=1.000  (chains=149)
+
+verdict=CHECK  failed=['G13f_flat_bands']
