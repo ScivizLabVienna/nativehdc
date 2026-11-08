@@ -34,3 +34,8 @@ VERDICT: NULL for "restriction-map gluing beats flat" as pre-registered (G11a sh
 POSITIVE FINDINGS (measured, 3 seeds x K{64,256,512}, D=1024): (1) chart-local partitioning beats flat global bundle depth-2 recall at saturation: SHEAF/SHARD vs FLAT = +0.23..+0.62 abs; flat collapses 0.43->0.04 with K while charts hold ~0.53-0.79 (glue axiom mean sim ~1.00 passes, phase bookkeeping exact).
 (2) Attribution: SHEAF-SHARD = -0.007 -> diagonal restriction maps add NOTHING beyond partitioning on these graphs (consistent with m=1 FHRR commutativity literature). Residual ceiling = intra-cell aliasing: duplicate (source,relation) key cells are unresolvable by value-rotations; charts inherit ~30% ambiguity floor at deg/8~0.5.
 FOLLOWUPS (not run): per-edge unique tags to break cell collisions; D=4096 charts; learned R_e only after tag fix. Honest writeup seed for paper #2 = "capacity partitioning > gluing maps in FHRR multi-hop recall" IF G12 confirms with tags.
+
+## G12 — unique-edge-tag control (2026-11-08, docs/g12-tags-spec.md rev a+2a, src/g12_tags.py)
+VERDICT: CONFIRMED (4/4 gates, 9/9 cells). FLAT(tagged)=knee curve 1.0/0.47-0.51/0.07-0.10 @K64/256/512; SHEAF=SHARD=1.000 ALL cells (glue sim ~1.00 > floor); delta SHEAF-FLAT +0.37..+0.93 abs; attribution |sheaf-shard|=0.000; tag-sensitivity gap >= 0.687 every cell (wrong-tag correct ~0.2 vs chance ~0.1).
+Prediction audit: written pre-run, matched within +-0.03 except delta@512 overshot (+0.93 vs pred +0.4..0.8) -- favorable, noted.
+Claim banked for paper #2 (docs/paper2-seed.md): chart-local partitioning >> flat bundling for multi-hop recall once addressing unambiguous; diagonal restriction maps = pure overhead at stalk size 1. G13+ needs operator (X1-X4 in seed file).
