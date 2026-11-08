@@ -39,3 +39,8 @@ FOLLOWUPS (not run): per-edge unique tags to break cell collisions; D=4096 chart
 VERDICT: CONFIRMED (4/4 gates, 9/9 cells). FLAT(tagged)=knee curve 1.0/0.47-0.51/0.07-0.10 @K64/256/512; SHEAF=SHARD=1.000 ALL cells (glue sim ~1.00 > floor); delta SHEAF-FLAT +0.37..+0.93 abs; attribution |sheaf-shard|=0.000; tag-sensitivity gap >= 0.687 every cell (wrong-tag correct ~0.2 vs chance ~0.1).
 Prediction audit: written pre-run, matched within +-0.03 except delta@512 overshot (+0.93 vs pred +0.4..0.8) -- favorable, noted.
 Claim banked for paper #2 (docs/paper2-seed.md): chart-local partitioning >> flat bundling for multi-hop recall once addressing unambiguous; diagonal restriction maps = pure overhead at stalk size 1. G13+ needs operator (X1-X4 in seed file).
+
+## G13 capacity curves (X1-X4) (2026-11-08, docs/g13-curves-spec.md, src/g13_curves.py)
+Gates G13a-e PASS; G13f FAIL = prediction-band calibration only (flat@D4096 0.77-0.85 vs heuristic band <=0.60; D/2lnD knee underestimates usable FHRR capacity ~3x at K=512). No re-runs, no gate edits post-measurement.
+Emitted: X1 charts 1.000 all D {512,1024,4096} vs flat 0.007-0.027/0.07-0.10/0.77-0.85; X2 nrel {2,8,32} sheaf 0.147-0.180/0.627-0.687/0.840-0.893 monotone per seed, flat <0.10 everywhere; X3 identity==random maps diff EXACTLY 0 (structural cancellation at m=1); X4 depth-3 charts 1.000 vs flat ~0.025.
+Paper #2: claims C1-C3 evidence complete; next authorized step = lit-scan round + figures + draft (still $0). Operator attention: capacity-formula correction affects how whitepaper #1 v-next quotes the knee.
