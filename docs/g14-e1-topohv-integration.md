@@ -37,6 +37,16 @@ mass → quasi-orthogonality 0.0115 vs 0.0092 at D=4096, degrading with K).
 - Integration code (wiring rf_encode into g10 harness entry) is an authorized nativehdc edit
   to be taken in a separate G-step with its own regression gate; not done here.
 
+## r10 follow-up addendum (2026-11-09, diagnostics only — no gate re-run, champion unchanged)
+- Side-info pre-seeding port (network-coding lens) measured NULL: readout cancellation of known
+  neighbors +0.0; wrong-side-info control moves identically (+0.3) => no decoder-asset transfer at K512/D4096.
+- Mechanism finding (p2d, uniform random token-bin drop): recall +3.0/+2.7/+2.4 pts @ k=4/8/12 with
+  recall ~invariant to token identity => lm+tok's -3.1 recall deficit vs hashids is ~95% shared-mass
+  interference, not identity loss. Paired semantic leg: AUC .695 -> .658 (k4) / .648 (k8).
+- Spec proposal only (joint-tune caveat, gate untouched): optional top-idf sparsification pass k<=4 buys
+  ~+3 recall pts at -3.7 AUC pts on this corpus; adopt per-application, re-check BOTH legs after stacking.
+- Evidence: S:/research/e1-topology-hv/{p2c_run.log,p2d_run.log,p2d_auc.log} + findings.md r10 sections.
+
 ## Cross-cites
 - arXiv:2605.16785 — original topology-derived HV proposal motivating E1 (P0 planner reference).
 - Campaign evidence: S:/research/e1-topology-hv/findings.md sections "P2b FULL GATE MEASUREMENT"
